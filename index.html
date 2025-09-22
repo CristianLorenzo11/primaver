@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+  <title>Feliz Primavera</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#fff9f0;
+      --text:#2b2b2b;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{
+      height:100%;
+      margin:0;
+      font-family:'Montserrat',system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;
+      overflow-x:hidden;
+      overflow-y:auto;
+      background: radial-gradient(circle at 10% 10%, #fffdf6 0%, var(--bg) 35%, #f7f3ea 100%);
+      position: relative;
+    }
+
+    .card{
+      width:100%;
+      max-width:900px;
+      background:linear-gradient(180deg,#ffffffcc, #fff9f0cc);
+      border-radius:18px;
+      box-shadow:0 12px 40px rgba(20,20,20,0.08);
+      padding:24px;
+      margin: 0 auto;
+      position:relative;
+      overflow:hidden;
+      z-index:1;
+    }
+
+    .hero{
+      text-align:center;
+      padding:24px 12px 10px;
+    }
+
+    .greeting{
+      font-size:clamp(24px,6vw,48px);
+      font-weight:800;
+      letter-spacing:-1px;
+      color:#2a2a2a;
+      margin-bottom:16px;
+    }
+
+    .poem{
+      margin-top:18px;
+      font-size:clamp(15px,3.8vw,20px);
+      font-weight:500;
+      color:#444;
+      line-height:1.6;
+      max-width:90%;
+      margin-left:auto;
+      margin-right:auto;
+      text-align:center;
+    }
+
+    .flower-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .flower-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .flower{
+      position:absolute;
+      pointer-events:none;
+      user-select:none;
+      z-index:0;
+      width:30px;
+      height:30px;
+    }
+
+    @media (max-width:520px){
+      .card{padding:18px;}
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="hero">
+      <div class="greeting">¡Feliz primavera, mi amor!</div>
+      <div class="poem">
+        "En cada pétalo florece mi amor por ti,<br>
+        en cada rayo de sol te vuelvo a elegir.<br>
+        La primavera trae mil colores y fragancias,<br>
+        pero ninguno supera la magia de tu presencia."
+      </div>
+    </div>
+
+    <!-- Imagen debajo, siempre visible -->
+    <div class="flower-image">
+      <img src="flor.jpg" alt="Flores amarillas" />
+    </div>
+  </div>
+
+  <script>
+    function createFlower() {
+      const flower = document.createElement("div");
+      flower.classList.add("flower");
+
+      // SVG de flor amarilla simple
+      flower.innerHTML = `
+        <svg viewBox="0 0 64 64" width="100%" height="100%">
+          <circle cx="32" cy="32" r="8" fill="#ffeb3b"/>
+          <path d="M32 0 L36 20 L28 20 Z" fill="#ffd54a"/>
+          <path d="M32 64 L36 44 L28 44 Z" fill="#ffd54a"/>
+          <path d="M0 32 L20 36 L20 28 Z" fill="#ffd54a"/>
+          <path d="M64 32 L44 36 L44 28 Z" fill="#ffd54a"/>
+        </svg>
+      `;
+
+      flower.style.left = Math.random() * window.innerWidth + "px";
+      flower.style.top = "-50px";
+      const size = 20 + Math.random() * 30;
+      flower.style.width = size + "px";
+      flower.style.height = size + "px";
+      flower.style.opacity = Math.random() * 0.7 + 0.3;
+
+      document.body.appendChild(flower);
+
+      const speed = 1 + Math.random() * 2;
+      const drift = (Math.random() - 0.5) * 2;
+
+      function fall() {
+        let top = parseFloat(flower.style.top);
+        let left = parseFloat(flower.style.left);
+        if (top > window.innerHeight) {
+          flower.remove();
+        } else {
+          flower.style.top = top + speed + "px";
+          flower.style.left = left + drift + "px";
+          requestAnimationFrame(fall);
+        }
+      }
+      requestAnimationFrame(fall);
+    }
+
+    // Generar flores continuamente
+    setInterval(createFlower, 300);
+  </script>
+</body>
+</html>
